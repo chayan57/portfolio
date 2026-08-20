@@ -95,9 +95,9 @@ export const metadata = {
 
   // CB Logo → Browser Favicon
   icons: {
-    icon: "/brand-url-Image.png",
-    shortcut: "/brand-url-Image.png",
-    apple: "/brand-url-Image.png",
+    icon: "/brand-url-Image.jpg",
+    shortcut: "/brand-url-Image.jpg",
+    apple: "/brand-url-Image.jpg",
   },
 
   alternates: {

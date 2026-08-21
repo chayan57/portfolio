@@ -95,9 +95,9 @@ export const metadata = {
 
   // CB Logo → Browser Favicon
   icons: {
-    icon: "/brand-url-Image.jpg",
-    shortcut: "/brand-url-Image.jpg",
-    apple: "/brand-url-Image.jpg",
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
 
   alternates: {
@@ -120,14 +120,7 @@ export const metadata = {
 
     type: "website",
 
-    images: [
-      {
-        url: "/brand-url-Image.png",
-        width: 1200,
-        height: 630,
-        alt: "Chayan Biswas - Web Developer",
-      },
-    ],
+    
   },
 
   twitter: {
@@ -139,7 +132,7 @@ export const metadata = {
     description:
       "Modern websites and web applications built with React, Next.js and modern web technologies.",
 
-    images: ["/brand-url-Image.png"],
+    images: ["/icon.png"],
   },
 
   robots: {

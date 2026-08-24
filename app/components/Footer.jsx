@@ -292,17 +292,7 @@ export default function Footer() {
     Get in touch
   </div>
 
-  <a
-    href="mailto:your@email.com"
-    className="text-decoration-none"
-    style={{
-      color: "#FFD84D",
-      fontSize: "13px",
-      fontWeight: "600",
-    }}
-  >
-  itzchayan24@gmail.com
-  </a>
+  
 </div>
 
         {/* ================= DIVIDER ================= */}

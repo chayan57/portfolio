@@ -1,38 +1,66 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowUpRight, Check, Code2, Sparkles } from "lucide-react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+
+import {
+  ArrowUpRight,
+  Check,
+  Code2,
+  Database,
+  Globe2,
+  Server,
+  Sparkles,
+} from "lucide-react";
+
 import { useRef } from "react";
 
 export default function Hero() {
-  const cardRef = useRef(null);
+  const sceneRef = useRef(null);
+
+  /* =========================================
+     MOUSE
+  ========================================= */
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useSpring(
-    useTransform(mouseY, [-0.5, 0.5], [8, -8]),
-    {
-      stiffness: 180,
-      damping: 20,
-    }
+  const smoothX = useSpring(mouseX, {
+    stiffness: 100,
+    damping: 20,
+  });
+
+  const smoothY = useSpring(mouseY, {
+    stiffness: 100,
+    damping: 20,
+  });
+
+  const rotateX = useTransform(
+    smoothY,
+    [-0.5, 0.5],
+    [10, -10]
   );
 
-  const rotateY = useSpring(
-    useTransform(mouseX, [-0.5, 0.5], [-8, 8]),
-    {
-      stiffness: 180,
-      damping: 20,
-    }
+  const rotateY = useTransform(
+    smoothX,
+    [-0.5, 0.5],
+    [-10, 10]
   );
 
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+    if (!sceneRef.current) return;
 
-    const rect = cardRef.current.getBoundingClientRect();
+    const rect = sceneRef.current.getBoundingClientRect();
 
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    const x =
+      (e.clientX - rect.left) / rect.width - 0.5;
+
+    const y =
+      (e.clientY - rect.top) / rect.height - 0.5;
 
     mouseX.set(x);
     mouseY.set(y);
@@ -43,11 +71,16 @@ export default function Hero() {
     mouseY.set(0);
   };
 
+  /* =========================================
+     REVEAL
+  ========================================= */
+
   const reveal = {
     hidden: {
       opacity: 0,
       y: 35,
     },
+
     visible: {
       opacity: 1,
       y: 0,
@@ -57,111 +90,71 @@ export default function Hero() {
   return (
     <section
       id="home"
-      style={{
-        minHeight: "100vh",
-        background: "#F5F5F2",
-        color: "#061A24",
-        paddingTop: "82px",
-        overflow: "hidden",
-        position: "relative",
-        perspective: "1200px",
-      }}
+      className="premium-hero"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
-      {/* ================= BACKGROUND GLOW ================= */}
+      {/* =====================================
+          BACKGROUND
+      ===================================== */}
 
       <motion.div
+        className="hero-glow hero-glow-one"
         animate={{
-          scale: [1, 1.12, 1],
-          opacity: [0.45, 0.7, 0.45],
+          scale: [1, 1.15, 1],
+          opacity: [0.35, 0.6, 0.35],
         }}
         transition={{
           duration: 7,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        style={{
-          position: "absolute",
-          width: "500px",
-          height: "500px",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(255,216,77,0.22), transparent 68%)",
-          top: "-120px",
-          right: "-120px",
-          pointerEvents: "none",
-        }}
       />
 
       <motion.div
+        className="hero-glow hero-glow-two"
         animate={{
           x: [0, 30, 0],
-          y: [0, -20, 0],
+          y: [0, -25, 0],
         }}
         transition={{
-          duration: 8,
+          duration: 9,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        style={{
-          position: "absolute",
-          width: "300px",
-          height: "300px",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(6,26,36,0.05), transparent 70%)",
-          bottom: "-100px",
-          left: "-80px",
-          pointerEvents: "none",
-        }}
       />
 
-      {/* ================= CONTAINER ================= */}
+      {/* Decorative grid */}
 
-      <div
-        className="container position-relative"
-        style={{
-          zIndex: 2,
-        }}
-      >
-        <div
-          className="row align-items-center"
-          style={{
-            minHeight: "calc(100vh - 82px)",
-            paddingTop: "55px",
-            paddingBottom: "70px",
-          }}
-        >
-          {/* ================= LEFT ================= */}
+      <div className="hero-grid" />
 
-          <div className="col-lg-7">
-            {/* Badge */}
+      {/* =====================================
+          CONTAINER
+      ===================================== */}
+
+      <div className="container position-relative hero-container">
+
+        <div className="row align-items-center">
+
+          {/* =================================
+              LEFT
+          ================================= */}
+
+          <div className="col-lg-6">
 
             <motion.div
               initial="hidden"
               animate="visible"
               variants={reveal}
               transition={{
-                duration: 0.7,
-                delay: 0.1,
-                ease: [0.22, 1, 0.36, 1],
+                duration: 0.8,
               }}
-              className="d-inline-flex align-items-center gap-2"
-              style={{
-                background: "rgba(255,216,77,0.17)",
-                border: "1px solid rgba(212,169,0,0.22)",
-                color: "#8A7000",
-                padding: "8px 13px",
-                borderRadius: "50px",
-                fontSize: "13px",
-                fontWeight: "700",
-                marginBottom: "25px",
-              }}
+              className="hero-badge"
             >
               <Sparkles size={15} />
-              Available for new projects
-            </motion.div>
 
-            {/* Heading */}
+              Premium Digital Experiences
+            </motion.div>
 
             <motion.h1
               initial="hidden"
@@ -169,59 +162,18 @@ export default function Hero() {
               variants={reveal}
               transition={{
                 duration: 0.9,
-                delay: 0.2,
-                ease: [0.22, 1, 0.36, 1],
+                delay: 0.15,
               }}
-              style={{
-                fontSize: "clamp(48px, 6vw, 82px)",
-                lineHeight: "0.98",
-                letterSpacing: "-4px",
-                fontWeight: "800",
-                maxWidth: "820px",
-                marginBottom: "28px",
-              }}
+              className="hero-title"
             >
-              I build digital
+              Build something
+
               <br />
 
-              <span
-                style={{
-                  position: "relative",
-                  display: "inline-block",
-                }}
-              >
-                experiences
-                <motion.span
-                  initial={{
-                    scaleX: 0,
-                    originX: 0,
-                  }}
-                  animate={{
-                    scaleX: 1,
-                  }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 1,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    bottom: "-8px",
-                    width: "100%",
-                    height: "7px",
-                    background: "#FFD84D",
-                    borderRadius: "20px",
-                  }}
-                />
+              <span>
+                people remember.
               </span>
-
-              <br />
-
-              that move people.
             </motion.h1>
-
-            {/* Description */}
 
             <motion.p
               initial="hidden"
@@ -229,20 +181,13 @@ export default function Hero() {
               variants={reveal}
               transition={{
                 duration: 0.8,
-                delay: 0.4,
-                ease: [0.22, 1, 0.36, 1],
+                delay: 0.3,
               }}
-              style={{
-                color: "#687780",
-                fontSize: "18px",
-                lineHeight: "1.7",
-                maxWidth: "620px",
-                marginBottom: "32px",
-              }}
+              className="hero-description"
             >
-              I design and develop modern websites with thoughtful UI,
-              smooth interactions, and responsive experiences that help
-              businesses stand out online.
+              I create premium, modern and interactive
+              websites using powerful technologies,
+              thoughtful UI and smooth motion.
             </motion.p>
 
             {/* Buttons */}
@@ -253,62 +198,39 @@ export default function Hero() {
               variants={reveal}
               transition={{
                 duration: 0.8,
-                delay: 0.55,
+                delay: 0.45,
               }}
-              className="d-flex flex-wrap align-items-center gap-3"
+              className="hero-buttons"
             >
-              {/* Primary */}
 
               <motion.a
                 href="#contact"
                 whileHover={{
-                  y: -4,
+                  y: -5,
+                  scale: 1.02,
                 }}
                 whileTap={{
                   scale: 0.97,
                 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20,
-                }}
-                className="text-decoration-none d-inline-flex align-items-center gap-2"
-                style={{
-                  background: "#FFD84D",
-                  color: "#061A24",
-                  padding: "15px 22px",
-                  borderRadius: "50px",
-                  fontSize: "15px",
-                  fontWeight: "700",
-                }}
+                className="hero-primary"
               >
                 Start a Project
+
                 <ArrowUpRight size={18} />
               </motion.a>
 
-              {/* Secondary */}
-
               <motion.a
-                href="#work"
+                href="#products"
                 whileHover={{
-                  y: -3,
+                  y: -4,
                 }}
-                whileTap={{
-                  scale: 0.97,
-                }}
-                className="text-decoration-none d-inline-flex align-items-center gap-2"
-                style={{
-                  color: "#061A24",
-                  padding: "14px 20px",
-                  border: "1px solid rgba(6,26,36,0.16)",
-                  borderRadius: "50px",
-                  fontSize: "15px",
-                  fontWeight: "700",
-                }}
+                className="hero-secondary"
               >
-                Explore my work
+                Explore Collection
+
                 <ArrowUpRight size={17} />
               </motion.a>
+
             </motion.div>
 
             {/* Trust */}
@@ -322,331 +244,276 @@ export default function Hero() {
               }}
               transition={{
                 delay: 0.8,
-                duration: 0.7,
               }}
-              className="d-flex flex-wrap gap-4"
-              style={{
-                marginTop: "38px",
-              }}
+              className="hero-trust"
             >
+
               {[
                 "Responsive",
                 "Modern UI",
                 "Smooth Motion",
               ].map((item) => (
+
                 <div
                   key={item}
-                  className="d-flex align-items-center gap-2"
+                  className="hero-trust-item"
                 >
-                  <Check
-                    size={16}
-                    strokeWidth={2.5}
-                    color="#9A7A00"
-                  />
+                  <Check size={15} />
 
-                  <span
-                    style={{
-                      color: "#53616B",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    {item}
-                  </span>
+                  {item}
                 </div>
+
               ))}
+
             </motion.div>
+
           </div>
 
-          {/* ================= RIGHT VISUAL ================= */}
+          {/* =================================
+              RIGHT 3D SCENE
+          ================================= */}
 
-          <div className="col-lg-5 mt-5 mt-lg-0">
-            <div
-              style={{
-                position: "relative",
-                maxWidth: "500px",
-                margin: "0 auto",
-              }}
-            >
-              {/* Floating small element */}
+          <div className="col-lg-6">
+
+            <div className="hero-scene-wrapper">
 
               <motion.div
-                animate={{
-                  y: [0, -12, 0],
-                  rotate: [0, 2, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  position: "absolute",
-                  top: "-30px",
-                  right: "-20px",
-                  zIndex: 5,
-                  background: "#061A24",
-                  color: "#fff",
-                  padding: "11px 15px",
-                  borderRadius: "14px",
-                  fontSize: "11px",
-                  fontWeight: "700",
-                }}
-              >
-                <Code2
-                  size={14}
-                  color="#FFD84D"
-                  style={{
-                    marginRight: "6px",
-                    verticalAlign: "middle",
-                  }}
-                />
-                Creative Development
-              </motion.div>
-
-              {/* 3D Card */}
-
-              <motion.div
-                ref={cardRef}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
+                ref={sceneRef}
                 style={{
                   rotateX,
                   rotateY,
-                  transformStyle: "preserve-3d",
-                  cursor: "default",
+                  transformStyle:
+                    "preserve-3d",
                 }}
+                className="hero-3d-scene"
               >
+
+                {/* =================================
+                    ORBIT 1
+                ================================= */}
+
                 <motion.div
-                  initial={{
-                    opacity: 0,
-                    scale: 0.9,
-                    y: 30,
-                  }}
+                  className="orbit orbit-one"
                   animate={{
-                    opacity: 1,
-                    scale: 1,
-                    y: 0,
+                    rotate: 360,
                   }}
                   transition={{
-                    duration: 1,
-                    delay: 0.4,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  style={{
-                    background: "#061A24",
-                    borderRadius: "30px",
-                    padding: "24px",
-                    minHeight: "470px",
-                    position: "relative",
-                    overflow: "hidden",
-                    transformStyle: "preserve-3d",
+                    duration: 18,
+                    repeat: Infinity,
+                    ease: "linear",
                   }}
                 >
-                  {/* Glow */}
 
-                  <motion.div
-                    animate={{
-                      x: [0, 35, 0],
-                      y: [0, -25, 0],
-                    }}
-                    transition={{
-                      duration: 6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    style={{
-                      position: "absolute",
-                      width: "300px",
-                      height: "300px",
-                      borderRadius: "50%",
-                      background:
-                        "radial-gradient(circle, rgba(255,216,77,0.25), transparent 70%)",
-                      top: "-130px",
-                      right: "-100px",
-                    }}
-                  />
+                  <div className="orbit-dot orbit-react">
+                    <Code2 size={18} />
+                    <span>React</span>
+                  </div>
 
-                  {/* Browser */}
+                </motion.div>
+
+
+                {/* =================================
+                    ORBIT 2
+                ================================= */}
+
+                <motion.div
+                  className="orbit orbit-two"
+                  animate={{
+                    rotate: -360,
+                  }}
+                  transition={{
+                    duration: 24,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                >
+
+                  <div className="orbit-dot orbit-next">
+                    <Globe2 size={17} />
+                    <span>Next.js</span>
+                  </div>
+
+                </motion.div>
+
+
+                {/* =================================
+                    ORBIT 3
+                ================================= */}
+
+                <motion.div
+                  className="orbit orbit-three"
+                  animate={{
+                    rotate: 360,
+                  }}
+                  transition={{
+                    duration: 30,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                >
+
+                  <div className="orbit-dot orbit-mongo">
+                    <Database size={17} />
+                    <span>MongoDB</span>
+                  </div>
+
+                </motion.div>
+
+
+                {/* =================================
+                    ORBIT 4
+                ================================= */}
+
+                <motion.div
+                  className="orbit orbit-four"
+                  animate={{
+                    rotate: -360,
+                  }}
+                  transition={{
+                    duration: 21,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                >
+
+                  <div className="orbit-dot orbit-express">
+                    <Server size={17} />
+                    <span>Express</span>
+                  </div>
+
+                </motion.div>
+
+
+                {/* =================================
+                    CENTER GLOW
+                ================================= */}
+
+                <motion.div
+                  className="center-glow"
+                  animate={{
+                    scale: [1, 1.08, 1],
+                    opacity: [0.5, 0.8, 0.5],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+
+
+                {/* =================================
+                    MAIN 3D CARD
+                ================================= */}
+
+                <motion.div
+                  className="hero-main-card"
+                  animate={{
+                    y: [0, -10, 0],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+
+                  {/* Top glass */}
 
                   <div
+                    className="hero-card-glass"
                     style={{
-                      position: "relative",
-                      zIndex: 2,
+                      transform:
+                        "translateZ(65px)",
                     }}
                   >
-                    {/* Browser top */}
 
-                    <div
-                      className="d-flex align-items-center justify-content-between"
-                      style={{
-                        marginBottom: "20px",
-                      }}
-                    >
-                      <div className="d-flex gap-2">
-                        {[1, 2, 3].map((item) => (
-                          <span
-                            key={item}
-                            style={{
-                              width: "8px",
-                              height: "8px",
-                              borderRadius: "50%",
-                              background: "#fff",
-                              opacity: 0.25,
-                            }}
-                          />
-                        ))}
+                    <div className="browser-top">
+
+                      <div className="browser-dots">
+                        <i />
+                        <i />
+                        <i />
                       </div>
 
-                      <span
-                        style={{
-                          color: "rgba(255,255,255,0.45)",
-                          fontSize: "9px",
-                          letterSpacing: "1px",
-                        }}
-                      >
-                        PORTFOLIO / 2026
+                      <span>
+                        PREMIUM / DIGITAL
                       </span>
+
                     </div>
+
 
                     {/* Website preview */}
 
-                    <div
-                      style={{
-                        background: "#F5F5F2",
-                        borderRadius: "20px",
-                        padding: "24px",
-                        minHeight: "320px",
-                        transform: "translateZ(35px)",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          marginBottom: "28px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: "32px",
-                            height: "32px",
-                            borderRadius: "9px",
-                            background: "#061A24",
+                    <div className="website-preview">
+
+                      <div className="preview-nav">
+
+                        <div className="preview-logo">
+                          É
+                        </div>
+
+                        <div className="preview-lines">
+                          <i />
+                          <i />
+                          <i />
+                        </div>
+
+                      </div>
+
+
+                      <div className="preview-heading">
+
+                        <span>
+                          CREATE
+                        </span>
+
+                        <strong>
+                          SOMETHING
+                          <br />
+                          BEAUTIFUL.
+                        </strong>
+
+                      </div>
+
+
+                      <div className="preview-line" />
+
+
+                      <div className="preview-boxes">
+
+                        <motion.div
+                          className="preview-box large"
+                          animate={{
+                            y: [0, -5, 0],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
                           }}
                         />
 
-                        <div className="d-flex gap-2">
-                          <span
-                            style={{
-                              width: "35px",
-                              height: "6px",
-                              borderRadius: "10px",
-                              background: "#D8DDDE",
-                            }}
-                          />
+                        <div className="preview-box small" />
 
-                          <span
-                            style={{
-                              width: "35px",
-                              height: "6px",
-                              borderRadius: "10px",
-                              background: "#D8DDDE",
-                            }}
-                          />
-                        </div>
                       </div>
 
-                      <div
-                        style={{
-                          color: "#061A24",
-                          fontSize: "25px",
-                          fontWeight: "800",
-                          lineHeight: "1.05",
-                          letterSpacing: "-1px",
-                          maxWidth: "260px",
-                        }}
-                      >
-                        Build something
-                        <br />
-                        people remember.
-                      </div>
-
-                      <div
-                        style={{
-                          width: "70px",
-                          height: "6px",
-                          borderRadius: "10px",
-                          background: "#FFD84D",
-                          marginTop: "15px",
-                        }}
-                      />
-
-                      <div
-                        className="row g-3"
-                        style={{
-                          marginTop: "28px",
-                        }}
-                      >
-                        <div className="col-7">
-                          <motion.div
-                            animate={{
-                              scale: [1, 1.03, 1],
-                            }}
-                            transition={{
-                              duration: 3,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                            }}
-                            style={{
-                              height: "90px",
-                              borderRadius: "14px",
-                              background: "#FFD84D",
-                            }}
-                          />
-                        </div>
-
-                        <div className="col-5">
-                          <div
-                            style={{
-                              height: "90px",
-                              borderRadius: "14px",
-                              background: "#E1E5E6",
-                            }}
-                          />
-                        </div>
-                      </div>
                     </div>
+
 
                     {/* Bottom */}
 
-                    <div
-                      className="d-flex align-items-center justify-content-between"
-                      style={{
-                        marginTop: "22px",
-                      }}
-                    >
-                      <div>
-                        <div
-                          style={{
-                            color: "#fff",
-                            fontSize: "13px",
-                            fontWeight: "700",
-                          }}
-                        >
-                          Designed to stand out.
-                        </div>
+                    <div className="card-bottom">
 
-                        <div
-                          style={{
-                            color: "rgba(255,255,255,0.4)",
-                            fontSize: "10px",
-                            marginTop: "4px",
-                          }}
-                        >
+                      <div>
+
+                        <strong>
+                          Digital Experience
+                        </strong>
+
+                        <span>
                           UI / UX · Development · Motion
-                        </div>
+                        </span>
+
                       </div>
 
                       <motion.div
@@ -657,98 +524,156 @@ export default function Hero() {
                           duration: 4,
                           repeat: Infinity,
                         }}
+                        className="card-arrow"
                       >
-                        <ArrowUpRight
-                          size={25}
-                          color="#FFD84D"
-                        />
+                        <ArrowUpRight size={22} />
                       </motion.div>
+
                     </div>
+
                   </div>
+
+
+                  {/* Depth layers */}
+
+                  <div className="depth-layer depth-one" />
+                  <div className="depth-layer depth-two" />
+
                 </motion.div>
-              </motion.div>
 
-              {/* Floating Bottom Card */}
 
-              <motion.div
-                animate={{
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  duration: 4.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  position: "absolute",
-                  left: "-28px",
-                  bottom: "25px",
-                  background: "#fff",
-                  border: "1px solid rgba(6,26,36,0.08)",
-                  borderRadius: "16px",
-                  padding: "13px 16px",
-                  zIndex: 6,
-                }}
-              >
-                <div
+                {/* =================================
+                    FLOATING WORK CARD
+                ================================= */}
+
+                <motion.div
+                  className="floating-work-card"
+                  animate={{
+                    y: [0, -14, 0],
+                    rotate: [-3, 0, -3],
+                  }}
+                  transition={{
+                    duration: 4.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                   style={{
-                    color: "#061A24",
-                    fontSize: "12px",
-                    fontWeight: "800",
+                    transform:
+                      "translateZ(110px)",
                   }}
                 >
-                  100% Responsive
-                </div>
 
-                <div
+                  <div className="floating-icon">
+                    <Code2 size={17} />
+                  </div>
+
+                  <div>
+                    <strong>
+                      Creative Development
+                    </strong>
+
+                    <span>
+                      Modern · Fast · Interactive
+                    </span>
+                  </div>
+
+                </motion.div>
+
+
+                {/* =================================
+                    BOTTOM WORK CARD
+                ================================= */}
+
+                <motion.div
+                  className="floating-result-card"
+                  animate={{
+                    y: [0, 10, 0],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                   style={{
-                    color: "#687780",
-                    fontSize: "10px",
-                    marginTop: "4px",
+                    transform:
+                      "translateZ(120px)",
                   }}
                 >
-                  Desktop · Tablet · Mobile
-                </div>
+
+                  <div className="result-icon">
+                    <Check size={16} />
+                  </div>
+
+                  <div>
+                    <strong>
+                      Project Ready
+                    </strong>
+
+                    <span>
+                      Desktop · Tablet · Mobile
+                    </span>
+                  </div>
+
+                </motion.div>
+
+
+                {/* =================================
+                    FLOATING 3D SPHERES
+                ================================= */}
+
+                <motion.div
+                  className="floating-sphere sphere-one"
+                  animate={{
+                    y: [0, -20, 0],
+                    rotate: [0, 180, 360],
+                  }}
+                  transition={{
+                    duration: 9,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+
+                <motion.div
+                  className="floating-sphere sphere-two"
+                  animate={{
+                    y: [0, 18, 0],
+                    rotate: [0, -180, -360],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+
               </motion.div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
 
-      {/* ================= SCROLL INDICATOR ================= */}
+      {/* Scroll */}
 
       <motion.div
         animate={{
           y: [0, 7, 0],
-          opacity: [0.5, 1, 0.5],
+          opacity: [0.4, 1, 0.4],
         }}
         transition={{
           duration: 2,
           repeat: Infinity,
         }}
-        className="d-none d-md-flex align-items-center gap-2"
-        style={{
-          position: "absolute",
-          bottom: "22px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          color: "#687780",
-          fontSize: "10px",
-          fontWeight: "700",
-          letterSpacing: "1.5px",
-          textTransform: "uppercase",
-        }}
+        className="hero-scroll"
       >
         Scroll to explore
-
-        <span
-          style={{
-            width: "25px",
-            height: "1px",
-            background: "#687780",
-          }}
-        />
+        <span />
       </motion.div>
+
     </section>
   );
 }

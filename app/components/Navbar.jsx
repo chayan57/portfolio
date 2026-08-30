@@ -125,7 +125,7 @@ export default function Navbar() {
                   marginTop: "4px",
                 }}
               >
-                Web Developer
+               Real Estate Web Developer
               </div>
             </div>
           </a>

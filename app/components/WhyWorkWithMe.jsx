@@ -137,39 +137,7 @@ export default function WhyWorkWithMe() {
 
           </div>
 
-          <div className="col-lg-5 mt-4 mt-lg-0">
-
-            <motion.p
-              initial={{
-                opacity: 0,
-                y: 25,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.15,
-              }}
-              style={{
-                color: "rgba(255,255,255,0.48)",
-                fontSize: "14px",
-                lineHeight: "1.8",
-                maxWidth: "390px",
-                marginLeft: "auto",
-                marginBottom: 0,
-              }}
-            >
-              I focus on creating digital experiences that are visually
-              strong, technically solid, and actually useful for your
-              business.
-            </motion.p>
-
-          </div>
+          
 
         </div>
 

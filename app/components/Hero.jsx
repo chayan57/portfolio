@@ -166,12 +166,11 @@ export default function Hero() {
               }}
               className="hero-title"
             >
-              Build something
-
+              Property Management & 
               <br />
 
               <span>
-                people remember.
+                Booking Platform
               </span>
             </motion.h1>
 

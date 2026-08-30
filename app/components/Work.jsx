@@ -17,9 +17,9 @@ const projects = [
   },
   {
     id: "02",
-    title: "Personal Brand Website",
-    category: "Personal Brand",
-    image: "/PersonalBrandWebsite.png",
+    title: "Real Estate Brand Website",
+    category: "real estate portal Brand",
+    image: "/real-estate1.png",
     description:
       "A polished personal brand experience built to showcase expertise and convert visitors.",
     result: "+68%",
@@ -149,28 +149,20 @@ export default function Work() {
           </div>
 
           <div className="col-lg-5 mt-4 mt-lg-0">
-
-            <motion.p
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.7,
-                delay: 0.2,
-              }}
-              style={{
-                maxWidth: "390px",
-                marginLeft: "auto",
-                marginBottom: 0,
-                color: "rgba(255,255,255,0.55)",
-                fontSize: "14px",
-                lineHeight: "1.8",
-              }}
-            >
-              Real websites built around strong positioning, thoughtful
-              design, and experiences that help businesses turn attention
-              into action.
-            </motion.p>
+<motion.p
+  className="real-estate-description"
+  initial={{ opacity: 0, y: 25 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.3 }}
+  transition={{
+    duration: 0.7,
+    delay: 0.2,
+  }}
+>
+  A modern real estate platform designed for effortless property
+  discovery, seamless booking, and powerful property management—
+  delivering a smooth experience for both guests and managers.
+</motion.p>
 
           </div>
 

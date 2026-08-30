@@ -14,25 +14,25 @@ const steps = [
     number: "01",
     title: "Discover",
     icon: Search,
-    text: "We start by understanding your business, goals, audience, and what you want the website to achieve.",
+    text: "I understand your real estate goals, target users, property types, and booking requirements before development begins.",
   },
   {
     number: "02",
-    title: "Design",
+    title: "Plan",
     icon: PenTool,
-    text: "I turn your ideas into a clean, modern interface with a strong visual direction and clear user experience.",
+    text: "I structure the property listings, user roles, manager workflow, availability, and booking experience for a smooth platform.",
   },
   {
     number: "03",
-    title: "Build",
+    title: "Develop",
     icon: Code2,
-    text: "Your website is developed with clean, scalable code and modern technologies for speed and reliability.",
+    text: "I build the real estate portal, dashboards, property management, search, filters, and booking features with scalable code.",
   },
   {
     number: "04",
     title: "Launch",
     icon: Rocket,
-    text: "After testing and optimization, your website is deployed and ready to start working for your business.",
+    text: "After testing and optimization, the platform is deployed with a responsive experience across desktop, tablet, and mobile.",
   },
 ];
 
@@ -164,39 +164,7 @@ export default function Process() {
 
           </div>
 
-          <div className="col-lg-5 mt-4 mt-lg-0">
-
-            <motion.p
-              initial={{
-                opacity: 0,
-                y: 25,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.3,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.15,
-              }}
-              style={{
-                color: "rgba(255,255,255,0.52)",
-                fontSize: "14px",
-                lineHeight: "1.8",
-                maxWidth: "400px",
-                marginLeft: "auto",
-                marginBottom: 0,
-              }}
-            >
-              A simple, transparent process designed to turn your idea into
-              a polished digital experience without unnecessary complexity.
-            </motion.p>
-
-          </div>
+          
 
         </div>
 

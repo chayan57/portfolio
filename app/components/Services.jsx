@@ -3,44 +3,62 @@
 import { motion } from "framer-motion";
 import {
   ArrowUpRight,
-  Code2,
-  LayoutTemplate,
-  MonitorSmartphone,
-  Palette,
+  Building2,
+  CalendarCheck,
+  House,
+  Search,
+  ShieldCheck,
+  Users,
 } from "lucide-react";
 
 const services = [
   {
     number: "01",
-    title: "Landing Pages",
+    title: "Property Listings",
     description:
-      "High-converting landing pages designed to make your offer clear, memorable, and action-focused.",
-    icon: LayoutTemplate,
-    tags: ["Responsive", "Conversion", "Modern UI"],
+      "Showcase residential and commercial properties with detailed information, pricing, amenities, photos, and location.",
+    icon: House,
+    tags: ["Properties", "Amenities", "Location"],
   },
   {
     number: "02",
-    title: "Business Websites",
+    title: "Property Management",
     description:
-      "Professional business websites that build trust, communicate your brand, and turn visitors into customers.",
-    icon: MonitorSmartphone,
-    tags: ["Business", "Responsive", "SEO Ready"],
+      "Give property managers powerful tools to create, update, manage, and monitor their listings from one dashboard.",
+    icon: Building2,
+    tags: ["Management", "Listings", "Dashboard"],
   },
   {
     number: "03",
-    title: "Web Applications",
+    title: "Property Search",
     description:
-      "Modern and scalable web applications built with clean architecture and smooth user experiences.",
-    icon: Code2,
-    tags: ["React", "Next.js", "API"],
+      "Help users quickly find the right property with advanced search, filters, location, price, type, and availability.",
+    icon: Search,
+    tags: ["Search", "Filters", "Responsive"],
   },
   {
     number: "04",
-    title: "UI & Frontend",
+    title: "Booking & Reservations",
     description:
-      "Pixel-perfect interfaces with thoughtful interactions, responsive layouts, and polished frontend development.",
-    icon: Palette,
-    tags: ["UI Design", "Frontend", "Motion"],
+      "Allow guests to check availability, select dates, submit booking requests, and manage their reservations easily.",
+    icon: CalendarCheck,
+    tags: ["Booking", "Calendar", "Reservations"],
+  },
+  {
+    number: "05",
+    title: "User & Agent Dashboard",
+    description:
+      "Dedicated dashboards for guests and property managers to manage bookings, properties, profiles, and activities.",
+    icon: Users,
+    tags: ["User", "Agent", "Dashboard"],
+  },
+  {
+    number: "06",
+    title: "Secure Platform",
+    description:
+      "Role-based authentication and protected functionality designed to keep users, managers, and property data secure.",
+    icon: ShieldCheck,
+    tags: ["Auth", "Roles", "Security"],
   },
 ];
 
@@ -58,9 +76,11 @@ const itemVariants = {
     opacity: 0,
     y: 45,
   },
+
   visible: {
     opacity: 1,
     y: 0,
+
     transition: {
       duration: 0.7,
       ease: [0.22, 1, 0.36, 1],
@@ -150,7 +170,7 @@ export default function Services() {
                 }}
               />
 
-              What I do
+              Real Estate Solutions
             </motion.div>
 
             <motion.h2
@@ -178,7 +198,7 @@ export default function Services() {
                 marginBottom: "20px",
               }}
             >
-              Services built
+              Everything you need
               <br />
 
               <span
@@ -186,42 +206,12 @@ export default function Services() {
                   color: "#FFD84D",
                 }}
               >
-                around your goals.
+                to manage properties.
               </span>
             </motion.h2>
           </div>
 
-          <div className="col-lg-5 d-flex align-items-end">
-            <motion.p
-              initial={{
-                opacity: 0,
-                y: 25,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.3,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.2,
-              }}
-              style={{
-                color: "rgba(255,255,255,0.55)",
-                fontSize: "16px",
-                lineHeight: "1.7",
-                marginBottom: "7px",
-                maxWidth: "470px",
-              }}
-            >
-              From a focused landing page to a complete web application,
-              I create digital experiences that look sharp and work
-              beautifully across every screen.
-            </motion.p>
-          </div>
+         
         </div>
 
         {/* ================= SERVICES ================= */}
@@ -241,7 +231,7 @@ export default function Services() {
 
             return (
               <div
-                className="col-12 col-md-6"
+                className="col-12 col-md-6 col-xl-4"
                 key={service.number}
               >
                 <motion.div
@@ -327,9 +317,6 @@ export default function Services() {
                     </motion.div>
 
                     <motion.span
-                      whileHover={{
-                        color: "#FFD84D",
-                      }}
                       style={{
                         color: "rgba(255,255,255,0.22)",
                         fontSize: "14px",
@@ -387,10 +374,8 @@ export default function Services() {
                               "rgba(255,255,255,0.05)",
                             border:
                               "1px solid rgba(255,255,255,0.07)",
-                            padding:
-                              "6px 10px",
-                            borderRadius:
-                              "50px",
+                            padding: "6px 10px",
+                            borderRadius: "50px",
                             fontSize: "10px",
                             fontWeight: "600",
                           }}
@@ -468,7 +453,7 @@ export default function Services() {
                 letterSpacing: "-0.5px",
               }}
             >
-              Have a project in mind?
+              Ready to manage your properties?
             </div>
 
             <div
@@ -479,7 +464,8 @@ export default function Services() {
                 marginTop: "5px",
               }}
             >
-              Let’s turn your idea into something memorable.
+              Discover properties, manage listings, and handle bookings
+              from one powerful platform.
             </div>
           </div>
 
@@ -501,7 +487,7 @@ export default function Services() {
               fontWeight: "700",
             }}
           >
-            Start a Project
+            Explore Properties
             <ArrowUpRight size={17} />
           </motion.a>
         </motion.div>

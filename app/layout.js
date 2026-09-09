@@ -13,101 +13,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL(
-    "https://portfolio-umber-nine-42.vercel.app"
-  ),
+  metadataBase: new URL("https://portfolio-umber-nine-42.vercel.app"),
 
   title: {
-    default:
-      "Chayan Biswas | Web Developer | React & Next.js Developer",
+    default: "Chayan Biswas | Web Developer | React & Next.js Developer",
     template: "%s | Chayan Biswas",
   },
 
   description:
     "Chayan Biswas is a professional Web Developer specializing in modern, responsive and high-performance websites, React, Next.js, JavaScript, and full-stack web development.",
 
+  // Cleaned Keywords (Removed spammy duplicate entries)
   keywords: [
     "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-    "Chayan Biswas",
-  "Chayan Biswas Web Developer",
-  "Chayan Biswas Developer",
-  "Chayan Biswas React Developer",
-  "Chayan Biswas Next.js Developer",
-  "Chayan Biswas Portfolio",
-  "Chayan Biswas Bangladesh",
-  "Chayan Biswas Web Developer Bangladesh",
-
-  "Web Developer Bangladesh",
-  "React Developer",
-  "Next.js Developer",
-  "Frontend Developer",
-  "Full Stack Developer",
-  "Freelance Web Developer",
-  "JavaScript Developer",
-  "Website Developer",
-    "Chayan Biswas",
     "Chayan Biswas Web Developer",
-    "Web Developer",
+    "Chayan Biswas React Developer",
+    "Chayan Biswas Next.js Developer",
+    "Chayan Biswas Portfolio",
+    "Chayan Biswas Bangladesh",
+    "Chayan Biswas Web Developer Bangladesh",
     "Web Developer Bangladesh",
     "Web Developer Chattogram",
-    "Freelance Web Developer",
-    "Professional Web Developer",
     "React Developer",
     "Next.js Developer",
-    "Next JS Developer",
-    "JavaScript Developer",
     "Frontend Developer",
     "Full Stack Developer",
-    "Full Stack Web Developer",
-    "React JS Developer",
-    "Responsive Web Developer",
-    "Website Developer",
-    "Business Website Developer",
-    "Landing Page Developer",
-    "Portfolio Website Developer",
-    "Ecommerce Website Developer",
-    "Custom Website Developer",
-    "Web Application Developer",
-    "React Website Development",
-    "Next.js Website Development",
-    "Website Design and Development",
-    "Responsive Website Development",
-    "Modern Website Development",
-    "Custom Web Development",
-    "Website Redesign",
-    "Website Maintenance",
+    "Freelance Web Developer",
+    "JavaScript Developer",
+    "MERN Stack Developer",
     "Figma to React",
     "Figma to Next.js",
-    "Frontend Web Development",
-    "Backend Web Development",
-    "API Integration",
-    "Full Stack Development",
   ],
 
   authors: [
@@ -120,7 +55,6 @@ export const metadata = {
   creator: "Chayan Biswas",
   publisher: "Chayan Biswas",
 
-  // CB Logo → Browser Favicon
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
@@ -131,41 +65,37 @@ export const metadata = {
     canonical: "https://portfolio-umber-nine-42.vercel.app",
   },
 
-  // Social Media Preview
   openGraph: {
-    title:
-      "Chayan Biswas | Web Developer | React & Next.js Developer",
-
+    title: "Chayan Biswas | Web Developer | React & Next.js Developer",
     description:
       "I build modern, responsive and high-performance websites and web applications using React, Next.js and modern web technologies.",
-
     url: "https://portfolio-umber-nine-42.vercel.app",
-
     siteName: "Chayan Biswas",
-
     locale: "en_US",
-
-    type: "website",
-
-    
+    type: "profile", // Set to profile for personal personal brands
+    firstName: "Chayan",
+    lastName: "Biswas",
+    images: [
+      {
+        url: "/icon.png", // Replace with your high-res profile photo (e.g., /chayan-biswas.jpg)
+        width: 1200,
+        height: 630,
+        alt: "Chayan Biswas - Web Developer",
+      },
+    ],
   },
 
   twitter: {
     card: "summary_large_image",
-
-    title:
-      "Chayan Biswas | Web Developer | React & Next.js Developer",
-
+    title: "Chayan Biswas | Web Developer | React & Next.js Developer",
     description:
       "Modern websites and web applications built with React, Next.js and modern web technologies.",
-
-    images: ["/icon.png"],
+    images: ["/icon.png"], // Replace with your high-res profile photo
   },
 
   robots: {
     index: true,
     follow: true,
-
     googleBot: {
       index: true,
       follow: true,
@@ -179,11 +109,34 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // Google Schema Markup for Person/Developer Profile
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Chayan Biswas",
+    url: "https://portfolio-umber-nine-42.vercel.app",
+    image: "https://portfolio-umber-nine-42.vercel.app/icon.png", // Direct link to your picture
+    jobTitle: "Full Stack Web Developer",
+    worksFor: {
+      "@type": "Organization",
+      name: "Freelance",
+    },
+    sameAs: [
+      "https://www.facebook.com/your-facebook-username", // Add your real profile links here
+      "https://github.com/your-github-username",
+      "https://www.linkedin.com/in/your-linkedin-username",
+    ],
+  };
+
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-    >
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        {/* Inject JSON-LD for rich search results & image SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

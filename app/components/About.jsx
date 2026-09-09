@@ -152,8 +152,8 @@ export default function About() {
               >
 
                 <Image
-                  src="/AboutPhoto.png"
-                  alt="Chayan Biswas"
+                  src="/chayan-biswas-web-developer.png"
+                  alt="Chayan Biswas - React & Next.js Developer"
                   fill
                   sizes="(max-width: 991px) 100vw, 430px"
                   style={{

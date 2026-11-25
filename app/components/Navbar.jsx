@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import TotalVisits from "./TotalVisits";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -61,6 +62,11 @@ export default function Navbar() {
       }}
     >
       <div className="container">
+        <nav className="navbar">
+  {/* তোমার existing navbar content */}
+
+  <TotalVisits />
+</nav>
         <div
           className="d-flex align-items-center justify-content-between"
           style={{

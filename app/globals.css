@@ -2336,3 +2336,18 @@ html {
   }
 
 }
+
+.total-visits {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: #888;
+  white-space: nowrap;
+}
+
+.total-visits-count {
+  font-weight: 600;
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+}

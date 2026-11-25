@@ -1,45 +1,41 @@
+
 "use client";
+import { Eye } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
-import { useEffect, useState } from "react";
-
-export default function TotalVisits() {
+export default function VisitCounter() {
   const [total, setTotal] = useState(null);
+  const called = useRef(false);
 
   useEffect(() => {
-    fetch("/api/visits", {
-      method: "POST",
-      cache: "no-store",
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch visits");
-        return res.json();
-      })
-      .then((data) => setTotal(data.total))
-      .catch(() => setTotal(0));
+    if (called.current) return;
+
+    called.current = true;
+
+    const updateVisits = async () => {
+      try {
+        const response = await fetch("/api/visits", {
+          method: "POST",
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to update visits");
+        }
+
+        const data = await response.json();
+        setTotal(data.total);
+      } catch (error) {
+        console.error("Visit Counter Error:", error);
+      }
+    };
+
+    updateVisits();
   }, []);
 
   return (
-    <div className="total-visits">
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" />
-        <circle cx="12" cy="12" r="3" />
-      </svg>
-
-      <span>Total Visits: </span>
-
-      <span className="total-visits-count">
-        {total === null ? "..." : total.toLocaleString()}
-      </span>
-    </div>
+    <span>
+     <Eye size={18}/>Total Visits: {total !== null ? total.toLocaleString() : "..."}
+    </span>
   );
 }

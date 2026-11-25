@@ -1,3 +1,4 @@
+
 import connectDB from "@/lib/connectDB";
 import Visit from "@/models/Visit";
 import { cookies } from "next/headers";
@@ -6,33 +7,48 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 const COOKIE_NAME = "portfolio_visit";
+const VISIT_ID = "portfolio_total_visits";
 
-// GET: Fetch total portfolio visits
+// GET: Fetch total visits
 export async function GET() {
   try {
     await connectDB();
 
-    const visit = await Visit.findById("portfolio_total_visits").lean();
+    const visit = await Visit.findById(VISIT_ID).lean();
+
+    console.log("Visit GET:", {
+      database: Visit.db.name,
+      collection: Visit.collection.name,
+      data: visit,
+    });
 
     return NextResponse.json(
-      { total: visit?.total ?? 0 },
+      {
+        total: visit?.total ?? 0,
+      },
       {
         headers: {
-          "Cache-Control": "no-store",
+          "Cache-Control": "no-store, no-cache, must-revalidate",
         },
       }
     );
   } catch (error) {
-    console.error("Visit GET error:", error);
+    console.error("Visit GET Error:", error);
 
     return NextResponse.json(
-      { error: "Failed to fetch visits" },
+      {
+        error: "Failed to fetch visits",
+        details:
+          process.env.NODE_ENV === "development"
+            ? error.message
+            : undefined,
+      },
       { status: 500 }
     );
   }
 }
 
-// POST: Count a new visit (once per cookie duration)
+// POST: Increment visits once per 24 hours per browser
 export async function POST() {
   try {
     await connectDB();
@@ -42,7 +58,7 @@ export async function POST() {
 
     if (!hasVisited) {
       await Visit.findByIdAndUpdate(
-        "portfolio_total_visits",
+        VISIT_ID,
         {
           $inc: { total: 1 },
         },
@@ -54,13 +70,15 @@ export async function POST() {
       );
     }
 
-    const visit = await Visit.findById("portfolio_total_visits").lean();
+    const visit = await Visit.findById(VISIT_ID).lean();
 
     const response = NextResponse.json(
-      { total: visit?.total ?? 0 },
+      {
+        total: visit?.total ?? 0,
+      },
       {
         headers: {
-          "Cache-Control": "no-store",
+          "Cache-Control": "no-store, no-cache, must-revalidate",
         },
       }
     );
@@ -77,10 +95,16 @@ export async function POST() {
 
     return response;
   } catch (error) {
-    console.error("Visit POST error:", error);
+    console.error("Visit POST Error:", error);
 
     return NextResponse.json(
-      { error: "Failed to update visits" },
+      {
+        error: "Failed to update visits",
+        details:
+          process.env.NODE_ENV === "development"
+            ? error.message
+            : undefined,
+      },
       { status: 500 }
     );
   }

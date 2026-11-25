@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 
 const COOKIE_NAME = "portfolio_visit";
 
+// GET: Fetch total portfolio visits
 export async function GET() {
   try {
     await connectDB();
@@ -24,10 +25,14 @@ export async function GET() {
   } catch (error) {
     console.error("Visit GET error:", error);
 
-    return NextResponse.json({ total: 0 }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch visits" },
+      { status: 500 }
+    );
   }
 }
 
+// POST: Count a new visit (once per cookie duration)
 export async function POST() {
   try {
     await connectDB();
@@ -74,6 +79,9 @@ export async function POST() {
   } catch (error) {
     console.error("Visit POST error:", error);
 
-    return NextResponse.json({ total: 0 }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update visits" },
+      { status: 500 }
+    );
   }
 }

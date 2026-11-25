@@ -9,27 +9,49 @@ export const dynamic = "force-dynamic";
 const COOKIE_NAME = "portfolio_visit";
 const VISIT_ID = "portfolio_total_visits";
 
+const ALLOWED_ORIGINS = [
+  "http://localhost:3000",
+  "https://chayanbiswas.vercel.app",
+];
+
+function getCorsHeaders(origin) {
+  return {
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin)
+      ? origin
+      : "https://chayanbiswas.vercel.app",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Credentials": "true",
+    "Cache-Control": "no-store, no-cache, must-revalidate",
+    Vary: "Origin",
+  };
+}
+
+// OPTIONS: Handle CORS preflight
+export async function OPTIONS(request) {
+  const origin = request.headers.get("origin") || "";
+
+  return new NextResponse(null, {
+    status: 204,
+    headers: getCorsHeaders(origin),
+  });
+}
+
 // GET: Fetch total visits
-export async function GET() {
+export async function GET(request) {
+  const origin = request.headers.get("origin") || "";
+
   try {
     await connectDB();
 
     const visit = await Visit.findById(VISIT_ID).lean();
-
-    console.log("Visit GET:", {
-      database: Visit.db.name,
-      collection: Visit.collection.name,
-      data: visit,
-    });
 
     return NextResponse.json(
       {
         total: visit?.total ?? 0,
       },
       {
-        headers: {
-          "Cache-Control": "no-store, no-cache, must-revalidate",
-        },
+        headers: getCorsHeaders(origin),
       }
     );
   } catch (error) {
@@ -38,18 +60,19 @@ export async function GET() {
     return NextResponse.json(
       {
         error: "Failed to fetch visits",
-        details:
-          process.env.NODE_ENV === "development"
-            ? error.message
-            : undefined,
       },
-      { status: 500 }
+      {
+        status: 500,
+        headers: getCorsHeaders(origin),
+      }
     );
   }
 }
 
 // POST: Increment visits once per 24 hours per browser
-export async function POST() {
+export async function POST(request) {
+  const origin = request.headers.get("origin") || "";
+
   try {
     await connectDB();
 
@@ -77,9 +100,7 @@ export async function POST() {
         total: visit?.total ?? 0,
       },
       {
-        headers: {
-          "Cache-Control": "no-store, no-cache, must-revalidate",
-        },
+        headers: getCorsHeaders(origin),
       }
     );
 
@@ -100,12 +121,11 @@ export async function POST() {
     return NextResponse.json(
       {
         error: "Failed to update visits",
-        details:
-          process.env.NODE_ENV === "development"
-            ? error.message
-            : undefined,
       },
-      { status: 500 }
+      {
+        status: 500,
+        headers: getCorsHeaders(origin),
+      }
     );
   }
 }

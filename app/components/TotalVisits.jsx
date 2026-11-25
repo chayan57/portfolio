@@ -6,7 +6,7 @@ export default function TotalVisits() {
   const [total, setTotal] = useState(null);
 
   useEffect(() => {
-    fetch("/api/visits", {
+    fetch("https://chayanbiswas.vercel.app/api/visits", {
       method: "POST",
       cache: "no-store",
     })
